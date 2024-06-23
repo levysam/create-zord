@@ -24,29 +24,6 @@ type command struct {
 	projectName string
 }
 
-func (c *command) run(cmd *cobra.Command, args []string) {
-	fmt.Println("Creating Project in Folder" + c.projectName)
-	_, err := git.PlainClone("./"+c.projectName, false, &git.CloneOptions{
-		URL: "https://github.com/not-empty/zord-microframework-golang",
-	})
-	fmt.Println("Created")
-	if err != nil {
-		panic(err)
-	}
-
-	fmt.Println("Creating regenerating .git folder without refs")
-	err = os.RemoveAll("./" + c.projectName + "/.git")
-	if err != nil {
-		panic(err)
-	}
-
-	_, err = git.PlainInit("./"+c.projectName+"/.git", false)
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println("Done")
-}
-
 func (c *command) setArgs(cmd *cobra.Command, args []string) error {
 	if len(args) < 1 {
 		return errors.New("project name is required")
@@ -54,6 +31,24 @@ func (c *command) setArgs(cmd *cobra.Command, args []string) error {
 	c.projectName = args[0]
 
 	return nil
+}
+
+func (c *command) run(cmd *cobra.Command, args []string) {
+	cloneErr := c.cloneProject()
+	c.errorHandling(cloneErr, "cloning project")
+
+	gitFolderErr := c.removeGitFolder()
+	c.errorHandling(gitFolderErr, "Removing .git directory")
+
+	gitInitErr := c.initClearGitFolder()
+	c.errorHandling(gitInitErr, "Initializing git repository")
+}
+
+func (c *command) errorHandling(err error, context string) {
+	if err != nil {
+		fmt.Println("Error on " + context)
+		panic(err)
+	}
 }
 
 func (c *command) runCommandOnProjectFolder(command string, args ...string) error {
@@ -64,4 +59,28 @@ func (c *command) runCommandOnProjectFolder(command string, args ...string) erro
 		return err
 	}
 	return nil
+}
+
+func (c *command) cloneProject() error {
+	fmt.Println("Creating Project in Folder" + c.projectName)
+	_, err := git.PlainClone("./"+c.projectName, false, &git.CloneOptions{
+		URL: "https://github.com/not-empty/zord-microframework-golang",
+	})
+
+	if err != nil {
+		return err
+	}
+	fmt.Println("Created")
+
+	return nil
+}
+
+func (c *command) removeGitFolder() error {
+	fmt.Println("Creating regenerating .git folder without refs")
+	return os.RemoveAll("./" + c.projectName + "/.git")
+}
+
+func (c *command) initClearGitFolder() error {
+	_, err := git.PlainInit("./"+c.projectName+"/.git", false)
+	return err
 }
