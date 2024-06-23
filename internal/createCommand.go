@@ -1,41 +1,44 @@
 package internal
 
 import (
-	"errors"
+	"create-zord/internal/steps"
 	"fmt"
 	"github.com/go-git/go-git/v5"
 	"github.com/spf13/cobra"
 	"os"
-	"os/exec"
 )
 
 func CreateCliCommand() *cobra.Command {
-	cmd := &command{}
+	cmd := &Command{}
 	return &cobra.Command{
 		Use:   "create-project",
 		Short: "Create a new zord project",
 		Long:  "Create a new zord project",
-		Args:  cmd.setArgs,
 		Run:   cmd.run,
 	}
 }
 
-type command struct {
-	projectName string
+type Command struct {
+	ProjectName        string
+	ProjectEntryPoints map[string]bool
 }
 
-func (c *command) setArgs(cmd *cobra.Command, args []string) error {
-	if len(args) < 1 {
-		return errors.New("project name is required")
-	}
-	c.projectName = args[0]
+func (c *Command) run(cmd *cobra.Command, args []string) {
+	name, nameErr := steps.GetProjectName()
+	c.errorHandling(nameErr, "Step Project Name")
+	c.ProjectName = name
 
-	return nil
-}
+	entryPoints, EntryErr := steps.GetCmdOptions()
+	c.errorHandling(EntryErr, "Step Cmd options")
+	c.ProjectEntryPoints = entryPoints
 
-func (c *command) run(cmd *cobra.Command, args []string) {
-	cloneErr := c.cloneProject()
+	fmt.Println("Creating Project")
+
+	cloneErr := c.cloneProject(c.ProjectName, "https://github.com/not-empty/zord-microframework-golang")
 	c.errorHandling(cloneErr, "cloning project")
+
+	addCmdErr := c.addZordEntrypoint()
+	c.errorHandling(addCmdErr, "adding entrypoint")
 
 	gitFolderErr := c.removeGitFolder()
 	c.errorHandling(gitFolderErr, "Removing .git directory")
@@ -44,43 +47,45 @@ func (c *command) run(cmd *cobra.Command, args []string) {
 	c.errorHandling(gitInitErr, "Initializing git repository")
 }
 
-func (c *command) errorHandling(err error, context string) {
+func (c *Command) errorHandling(err error, context string) {
 	if err != nil {
-		fmt.Println("Error on " + context)
-		panic(err)
+		os.Exit(1)
 	}
 }
 
-func (c *command) runCommandOnProjectFolder(command string, args ...string) error {
-	clicmd := exec.Command(command, args...)
-	clicmd.Path = "./" + c.projectName
-	err := clicmd.Run()
-	if err != nil {
-		return err
-	}
-	return nil
-}
-
-func (c *command) cloneProject() error {
-	fmt.Println("Creating Project in Folder" + c.projectName)
-	_, err := git.PlainClone("./"+c.projectName, false, &git.CloneOptions{
-		URL: "https://github.com/not-empty/zord-microframework-golang",
+func (c *Command) cloneProject(path string, url string) error {
+	_, err := git.PlainClone("./"+path, false, &git.CloneOptions{
+		URL: url,
 	})
 
 	if err != nil {
 		return err
 	}
-	fmt.Println("Created")
 
 	return nil
 }
 
-func (c *command) removeGitFolder() error {
-	fmt.Println("Creating regenerating .git folder without refs")
-	return os.RemoveAll("./" + c.projectName + "/.git")
+func (c *Command) removeGitFolder() error {
+	return os.RemoveAll("./" + c.ProjectName + "/.git")
 }
 
-func (c *command) initClearGitFolder() error {
-	_, err := git.PlainInit("./"+c.projectName+"/.git", false)
+func (c *Command) initClearGitFolder() error {
+	_, err := git.PlainInit("./"+c.ProjectName+"/.git", false)
 	return err
+}
+
+func (c *Command) addZordEntrypoint() error {
+	for key, install := range c.ProjectEntryPoints {
+		if !install {
+			continue
+		}
+		if key == "" {
+			continue
+		}
+		err := c.cloneProject("./"+c.ProjectName+"/cmd", key)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
