@@ -2,7 +2,7 @@
 
 This project is a cli to create zord projects easily
 
-## Get cli using instaled golang
+## Get cli using installed golang
 
 ``` SHELL
 go install github.com/levysam/create-zord@latest
