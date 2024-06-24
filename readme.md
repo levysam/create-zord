@@ -8,20 +8,10 @@ This project is a cli to create zord projects easily
 go install github.com/levysam/create-zord@latest
 ```
 
-then run the command
+then export the bin file to your terminal
 
 ``` SHELL
-create-zord create-project
-```
-
-## Get cli using docker
-
-``` SHELL
-docker run -v ./:$(pwd) -w $(pwd) golang:1.22-alpine sh
-```
-
-``` SHELL
-go install github.com/levysam/create-zord@latest
+export PATH=$PATH:$GOPATH/go/bin/create-zord
 ```
 
 then run the command
