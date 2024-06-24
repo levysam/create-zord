@@ -1,9 +1,9 @@
 package steps
 
 import (
-	"create-zord/internal/ui"
 	"errors"
 	tea "github.com/charmbracelet/bubbletea"
+	"github.com/levysam/create-zord/internal/ui"
 )
 
 func GetProjectName() (string, error) {

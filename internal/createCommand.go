@@ -1,9 +1,9 @@
 package internal
 
 import (
-	"create-zord/internal/steps"
 	"fmt"
 	"github.com/go-git/go-git/v5"
+	"github.com/levysam/create-zord/internal/steps"
 	"github.com/spf13/cobra"
 	"os"
 )

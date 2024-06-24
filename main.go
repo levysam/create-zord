@@ -1,8 +1,8 @@
 package main
 
 import (
-	"create-zord/internal"
-	"create-zord/pkg"
+	"github.com/levysam/create-zord/internal"
+	"github.com/levysam/create-zord/pkg"
 )
 
 func main() {
