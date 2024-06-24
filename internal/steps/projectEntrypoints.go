@@ -7,8 +7,8 @@ import (
 )
 
 var options = []ui.Item{
-	{Title: "http", Desc: "Http implementation entrypoint", Flag: "https://github.com/levysam/zord-lambda-cmd"},
-	{Title: "lambda", Desc: "Lambda implementation entrypoint (needs http implementation)", Flag: ""},
+	{Title: "http", Desc: "Http implementation entrypoint", Flag: "http"},
+	{Title: "lambda", Desc: "Lambda implementation entrypoint (needs http implementation)", Flag: "https://github.com/levysam/zord-lambda-cmd"},
 }
 
 func GetCmdOptions() (map[string]bool, error) {

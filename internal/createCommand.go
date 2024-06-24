@@ -40,7 +40,7 @@ func (c *Command) run(cmd *cobra.Command, args []string) {
 	addCmdErr := c.addZordEntrypoint()
 	c.errorHandling(addCmdErr, "adding entrypoint")
 
-	gitFolderErr := c.removeGitFolder()
+	gitFolderErr := c.removeInProjectFolder("/.git")
 	c.errorHandling(gitFolderErr, "Removing .git directory")
 
 	gitInitErr := c.initClearGitFolder()
@@ -65,8 +65,8 @@ func (c *Command) cloneProject(path string, url string) error {
 	return nil
 }
 
-func (c *Command) removeGitFolder() error {
-	return os.RemoveAll("./" + c.ProjectName + "/.git")
+func (c *Command) removeInProjectFolder(path string) error {
+	return os.RemoveAll("./" + c.ProjectName + path)
 }
 
 func (c *Command) initClearGitFolder() error {
@@ -76,12 +76,16 @@ func (c *Command) initClearGitFolder() error {
 
 func (c *Command) addZordEntrypoint() error {
 	for key, install := range c.ProjectEntryPoints {
+		if key == "http" && !install {
+			removeErr := c.removeInProjectFolder("/cmd/http")
+			c.errorHandling(removeErr, "Remove http entrypoint")
+			continue
+		}
+
 		if !install {
 			continue
 		}
-		if key == "" {
-			continue
-		}
+
 		err := c.cloneProject("./"+c.ProjectName+"/cmd", key)
 		if err != nil {
 			return err
