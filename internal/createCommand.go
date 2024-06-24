@@ -76,20 +76,21 @@ func (c *Command) initClearGitFolder() error {
 
 func (c *Command) addZordEntrypoint() error {
 	for key, install := range c.ProjectEntryPoints {
-		if key == "http" && !install {
-			removeErr := c.removeInProjectFolder("/cmd/http")
-			c.errorHandling(removeErr, "Remove http entrypoint")
-			continue
-		}
+		err := c.installEntrypoint(key, install)
+		c.errorHandling(err, "installing entrypoint")
+	}
+	return nil
+}
 
-		if !install {
-			continue
-		}
+func (c *Command) installEntrypoint(url string, install bool) error {
+	if url == "http" && !install {
+		removeErr := c.removeInProjectFolder("/cmd/http")
+		return removeErr
+	}
 
-		err := c.cloneProject("./"+c.ProjectName+"/cmd", key)
-		if err != nil {
-			return err
-		}
+	err := c.cloneProject("./"+c.ProjectName+"/cmd", url)
+	if err != nil {
+		return err
 	}
 	return nil
 }

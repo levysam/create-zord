@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="19990713-51b4-413b-8af4-c186846c8c7d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/internal/createCommand.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/createCommand.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/steps/projectEntrypoints.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/steps/projectEntrypoints.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
