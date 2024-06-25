@@ -12,11 +12,19 @@ type Item struct {
 }
 
 type Selection struct {
-	Choices map[string]bool
+	Choices map[string]Choices
 }
 
-func (s *Selection) Update(optionName string, value bool) {
-	s.Choices[optionName] = value
+type Choices struct {
+	Name    string
+	Install bool
+}
+
+func (s *Selection) Update(optionName string, value bool, flag string) {
+	s.Choices[flag] = Choices{
+		Name:    optionName,
+		Install: value,
+	}
 }
 
 type MultiSelectModel struct {
@@ -45,7 +53,7 @@ func NewMultiSelectModel(header string, options []Item) *MultiSelectModel {
 		options:  options,
 		selected: make(map[int]struct{}),
 		Choices: Selection{
-			Choices: map[string]bool{},
+			Choices: map[string]Choices{},
 		},
 		header: header,
 		Exit:   false,
@@ -80,7 +88,7 @@ func (m *MultiSelectModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			}
 		case "y":
 			for selectedKey := range m.selected {
-				m.Choices.Update(m.options[selectedKey].Flag, true)
+				m.Choices.Update(m.options[selectedKey].Title, true, m.options[selectedKey].Flag)
 				m.cursor = selectedKey
 			}
 			return m, tea.Quit

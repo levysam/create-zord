@@ -4,9 +4,13 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="19990713-51b4-413b-8af4-c186846c8c7d" name="Changes" comment="">
+    <list default="true" id="19990713-51b4-413b-8af4-c186846c8c7d" name="Changes" comment="fix: fixing readme.md">
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/create-zord.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/create-zord" beforeDir="false" afterPath="$PROJECT_DIR$/create-zord" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/createCommand.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/createCommand.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/steps/projectEntrypoints.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/steps/projectEntrypoints.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/ui/multiSelect.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/ui/multiSelect.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,25 +38,28 @@
     <option name="showLibraryContents" value="true" />
     <option name="showMembers" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultGoTemplateProperty": "Go File",
-    "Go Build.go build create-zord.executor": "Run",
-    "Go Build.go build github.com/levysam/create-zord.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.go.formatter.settings.were.checked": "true",
-    "RunOnceActivity.go.migrated.go.modules.settings": "true",
-    "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
-    "git-widget-placeholder": "main",
-    "go.import.settings.migrated": "true",
-    "go.sdk.automatically.set": "true",
-    "last_opened_file_path": "/Users/levysampaio/Documents/openSource/create-zord",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultGoTemplateProperty&quot;: &quot;Go File&quot;,
+    &quot;Go Build.go build create-zord.executor&quot;: &quot;Run&quot;,
+    &quot;Go Build.go build github.com/levysam/create-zord.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.modules.go.list.on.any.changes.was.set&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
+    &quot;go.sdk.automatically.set&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/levysampaio/Documents/openSource/create-zord/teste&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/teste" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/cmds" />
     </key>
@@ -114,6 +121,11 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="chore: renaming to main" />
+    <MESSAGE value="fix: fixing readme.md" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: fixing readme.md" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>

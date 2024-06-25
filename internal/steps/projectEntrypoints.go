@@ -11,7 +11,7 @@ var options = []ui.Item{
 	{Title: "lambda", Desc: "Lambda implementation entrypoint (needs http implementation)", Flag: "https://github.com/levysam/zord-lambda-cmd"},
 }
 
-func GetCmdOptions() (map[string]bool, error) {
+func GetCmdOptions() (map[string]ui.Choices, error) {
 	model := ui.NewMultiSelectModel("Project name:", options)
 	_, err := tea.NewProgram(model).Run()
 	if err != nil {
